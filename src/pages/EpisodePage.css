@@ -1,0 +1,14 @@
+.title {
+    font-family: 'Raleway';
+    font-size: 20px;
+    display: flex;
+    font-weight: 700;
+    justify-content: center;
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
