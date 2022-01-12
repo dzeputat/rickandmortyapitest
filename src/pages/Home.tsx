@@ -16,10 +16,11 @@ import { Route } from 'react-router'
 
 import CharacterDetailPage from './CharacterDetailPage'
 import CharactersPage from './CharactersPage'
-import LikedPage from './LikedPage'
+
 import './Home.css'
 import UserPage from './UserPage'
 import EpisodesPage from './EpisodesPage'
+import FavoriteCharactersPage from './FavoriteCharactersPage'
 
 const Home: React.FC = () => {
   return (
@@ -31,7 +32,11 @@ const Home: React.FC = () => {
           path="/home/:tab(characters)/:characterId"
           component={CharacterDetailPage}
         />
-        <Route exact path="/home/:tab(liked)" component={LikedPage} />
+        <Route
+          exact
+          path="/home/:tab(favorite)"
+          component={FavoriteCharactersPage}
+        />
         <Route exact path="/home/:tab(user)" component={UserPage} />
         <Route exact path="/home/:tab(episode)" component={EpisodesPage} />
         <Route
@@ -45,7 +50,7 @@ const Home: React.FC = () => {
           <IonIcon icon={homeOutline} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="liked" href="/home/liked">
+        <IonTabButton tab="favorite" href="/home/favorite">
           <IonIcon icon={heartOutline} />
           <IonLabel>Liked</IonLabel>
         </IonTabButton>

@@ -1,0 +1,8 @@
+.empty-title {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Creepster';
+    font-size: 40px;
+}

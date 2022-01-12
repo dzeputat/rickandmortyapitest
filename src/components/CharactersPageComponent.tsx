@@ -1,12 +1,16 @@
 import { Characters } from '../utils/query'
-import '../pages/CharactersPage.css'
+import './CharactersPageComponent.css'
+import { IonButton, IonIcon } from '@ionic/react'
+import { thumbsDownOutline } from 'ionicons/icons'
+
 const CharactersPageComponent: React.FC<{
   character: Characters
   onCharacterClick: (id: number) => void
-}> = ({ character, onCharacterClick }) => {
+  onDislikeClick?: (e: any, item: Characters) => void
+}> = ({ character, onCharacterClick, onDislikeClick }) => {
   return (
     <div
-      className="list-item"
+      className={`list-item ${onDislikeClick && 'dislike'}`}
       onClick={onCharacterClick.bind(null, character.id)}
     >
       <div className="list-item__avatar">
@@ -17,6 +21,13 @@ const CharactersPageComponent: React.FC<{
         <h3>{character.status}</h3>
         <p>{character.species}</p>
       </div>
+      {onDislikeClick && (
+        <div className="list-item__dislike">
+          <IonButton fill="clear" onClick={(e) => onDislikeClick(e, character)}>
+            <IonIcon icon={thumbsDownOutline} slot="icon-only"></IonIcon>
+          </IonButton>
+        </div>
+      )}
     </div>
   )
 }

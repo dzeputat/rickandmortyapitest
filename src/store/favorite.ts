@@ -1,10 +1,10 @@
-import { Character } from './../utils/query'
+import { Character, Characters } from './../utils/query'
 import { RootState } from './rootReducer'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 const favoriteKey = 'favoriteKey'
 export interface Favorite {
-  character: Character
+  character: Characters
   like: boolean | null
   dislike: boolean | null
 }
@@ -37,21 +37,22 @@ export const initFavorite = createAsyncThunk<Favorite[] | void, void>(
 )
 export const addToFavorite = createAsyncThunk<
   Favorite[],
-  { item: Character; favorite: boolean },
+  { item: Characters; favorite: boolean },
   { state: RootState }
 >('favorite/addToFavorite', async ({ item, favorite }, { getState }) => {
   const items: Favorite[] = copyObject(getState().favorite.items)
   let newItem = items.find(({ character }) => character.id === item.id)
   if (newItem) {
     if (favorite) {
-      newItem.like = !newItem.like
+      newItem.like === true ? (newItem.like = false) : (newItem.like = true)
+      newItem.dislike === true
+        ? (newItem.dislike = null)
+        : (newItem.dislike = null)
     } else {
-      newItem.dislike = !newItem.dislike
-    }
-    if (newItem.like === true) {
-      newItem.dislike = false
-    } else if (newItem.dislike === true) {
-      newItem.like = false
+      newItem.dislike === true
+        ? (newItem.dislike = false)
+        : (newItem.dislike = true)
+      newItem.like === true ? (newItem.like = null) : (newItem.like = null)
     }
   } else {
     if (favorite) {
@@ -60,6 +61,7 @@ export const addToFavorite = createAsyncThunk<
       items.push({ character: item, like: null, dislike: favorite })
     }
   }
+
   saveFavoriteItems(items)
   return items
 })

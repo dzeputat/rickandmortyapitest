@@ -21,6 +21,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router'
 import {
   Character,
+  Characters,
   GetCharacterById,
   GET_CHARACTER_BY_ID,
 } from '../utils/query'
@@ -33,17 +34,15 @@ import { addToFavorite, selectFavoriteItems } from '../store/favorite'
 const CharacterDetailPageComponent: React.FC<{
   character: Character
   onEpisodeClick: (id: number) => void
-  onLikeBtnClick: (character: Character) => void
-  onDisLikeBtnClick: (character: Character) => void
+  onLikeOrDislikeBtnClick: (character: Character, like: boolean) => void
   like: boolean | null
   dislike: boolean | null
 }> = ({
   character,
   onEpisodeClick,
-  onLikeBtnClick,
+  onLikeOrDislikeBtnClick,
   like,
   dislike,
-  onDisLikeBtnClick,
 }) => {
   console.log(like, dislike)
 
@@ -56,7 +55,7 @@ const CharacterDetailPageComponent: React.FC<{
         <IonButton
           fill="clear"
           className="character__btns-favorite"
-          onClick={onLikeBtnClick.bind(null, character)}
+          onClick={onLikeOrDislikeBtnClick.bind(null, character, true)}
         >
           <IonIcon
             icon={thumbsUpOutline}
@@ -66,7 +65,7 @@ const CharacterDetailPageComponent: React.FC<{
         </IonButton>
         <IonButton
           fill="clear"
-          onClick={onDisLikeBtnClick.bind(null, character)}
+          onClick={onLikeOrDislikeBtnClick.bind(null, character, false)}
         >
           <IonIcon
             icon={thumbsDownOutline}
@@ -143,12 +142,18 @@ const CharacterDetailPage: React.FC = () => {
   const onEpisodeClick = (episodeId: number) => {
     history.push(`/home/episode/${episodeId}`)
   }
-  const onLikeBtnClick = (character: Character) => {
-    dispatch(addToFavorite({ item: character, favorite: true }))
+
+  const onLikeOrDislikeBtnClick = (character: Character, like: boolean) => {
+    const updateCharacter: Characters = {
+      id: character.id,
+      name: character.name,
+      status: character.status,
+      species: character.species,
+      image: character.image,
+    }
+    dispatch(addToFavorite({ item: updateCharacter, favorite: like }))
   }
-  const onDisLikeBtnClick = (character: Character) => {
-    dispatch(addToFavorite({ item: character, favorite: false }))
-  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -164,8 +169,7 @@ const CharacterDetailPage: React.FC = () => {
           <CharacterDetailPageComponent
             character={character}
             onEpisodeClick={onEpisodeClick}
-            onLikeBtnClick={onLikeBtnClick}
-            onDisLikeBtnClick={onDisLikeBtnClick}
+            onLikeOrDislikeBtnClick={onLikeOrDislikeBtnClick}
             like={like}
             dislike={dislike}
           />
