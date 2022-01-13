@@ -44,8 +44,6 @@ const CharacterDetailPageComponent: React.FC<{
   like,
   dislike,
 }) => {
-  console.log(like, dislike)
-
   return (
     <div className="character">
       <div className="character__img">
@@ -121,7 +119,7 @@ const CharacterDetailPage: React.FC = () => {
   const params: { characterId: string } = useParams()
   const id = params.characterId
   const [character, setCharacter] = useState<Character | undefined>()
-  const { data, loading } = useQuery<GetCharacterById>(GET_CHARACTER_BY_ID, {
+  const { data, error } = useQuery<GetCharacterById>(GET_CHARACTER_BY_ID, {
     variables: { id: id },
   })
   const favoriteStore = useSelector(selectFavoriteItems)
@@ -165,6 +163,7 @@ const CharacterDetailPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+        {error && <div className="spinner">{error.message}</div>}
         {character ? (
           <CharacterDetailPageComponent
             character={character}

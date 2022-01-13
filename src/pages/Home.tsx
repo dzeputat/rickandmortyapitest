@@ -1,17 +1,12 @@
 import {
-  IonContent,
-  IonHeader,
   IonIcon,
   IonLabel,
-  IonPage,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/react'
-import { heartOutline, home, homeOutline, personOutline } from 'ionicons/icons'
+import { heartOutline, homeOutline, personOutline } from 'ionicons/icons'
 import { Route } from 'react-router'
 
 import CharacterDetailPage from './CharacterDetailPage'

@@ -1,7 +1,7 @@
 import { Characters } from '../utils/query'
 import './CharactersPageComponent.css'
 import { IonButton, IonIcon } from '@ionic/react'
-import { thumbsDownOutline } from 'ionicons/icons'
+import { trashOutline } from 'ionicons/icons'
 
 const CharactersPageComponent: React.FC<{
   character: Characters
@@ -24,7 +24,7 @@ const CharactersPageComponent: React.FC<{
       {onDislikeClick && (
         <div className="list-item__dislike">
           <IonButton fill="clear" onClick={(e) => onDislikeClick(e, character)}>
-            <IonIcon icon={thumbsDownOutline} slot="icon-only"></IonIcon>
+            <IonIcon icon={trashOutline} slot="icon-only"></IonIcon>
           </IonButton>
         </div>
       )}

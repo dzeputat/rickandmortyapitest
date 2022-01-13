@@ -21,7 +21,7 @@ const EpisodesPage: React.FC = () => {
   const params: { episodeId: string } = useParams()
   const history = useHistory()
   const id = +params.episodeId
-  console.log(id)
+
   const [episode, setEpisode] = useState<Episode | undefined>()
   const { data, loading } = useQuery<GetEpisodeById>(GET_EPISODE_BY_ID, {
     variables: {
@@ -31,7 +31,7 @@ const EpisodesPage: React.FC = () => {
   useEffect(() => {
     setEpisode(data?.episodesByIds[0])
   }, [data])
-  console.log(episode)
+
   const onCharacterClick = (id: number) => {
     history.push(`/home/characters/${id}`)
   }

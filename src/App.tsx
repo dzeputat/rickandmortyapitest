@@ -24,6 +24,7 @@ import Home from './pages/Home'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { initFavorite } from './store/favorite'
+import { init } from './store/auth'
 
 setupIonicReact()
 
@@ -31,6 +32,7 @@ const App: React.FC = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(initFavorite())
+    dispatch(init())
   })
   return (
     <IonApp>

@@ -1,6 +1,7 @@
 import { Character, Characters } from './../utils/query'
 import { RootState } from './rootReducer'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { Storage } from '@capacitor/storage'
 
 const favoriteKey = 'favoriteKey'
 export interface Favorite {
@@ -20,18 +21,21 @@ const initialState: FavoriteState = {
   inProgress: false,
 }
 const copyObject = (obj: any) => JSON.parse(JSON.stringify(obj))
-const saveFavoriteItems = (items: Favorite[]) =>
-  localStorage.setItem(favoriteKey, JSON.stringify(items))
+const saveFavoriteItems = async (items: Favorite[]) =>
+  await Storage.set({ key: favoriteKey, value: JSON.stringify(items) })
 
 export const initFavorite = createAsyncThunk<Favorite[] | void, void>(
   'favorite/initFavorite',
   async () => {
+    const characters = (await Storage.get({ key: favoriteKey })).value
+    if (!characters) {
+      return
+    }
     try {
-      const characters = JSON.parse(localStorage.getItem(favoriteKey) || '')
-      if (Array.isArray(characters)) {
-        return characters
-      }
-    } catch {}
+      return JSON.parse(characters)
+    } catch (err) {
+      await Storage.remove({ key: favoriteKey })
+    }
     return []
   }
 )
@@ -58,12 +62,24 @@ export const addToFavorite = createAsyncThunk<
     if (favorite) {
       items.push({ character: item, like: favorite, dislike: null })
     } else {
-      items.push({ character: item, like: null, dislike: favorite })
+      items.push({ character: item, like: null, dislike: !favorite })
     }
   }
 
   saveFavoriteItems(items)
   return items
+})
+export const removeFavoriteItem = createAsyncThunk<
+  Favorite[],
+  number,
+  { state: RootState }
+>('cart/removeItem', async (idx, { getState }) => {
+  const items: Favorite[] = copyObject(getState().favorite.items)
+
+  const item = items.filter((item: Favorite) => item.character.id !== idx)
+
+  saveFavoriteItems(item)
+  return item
 })
 const favoriteSlice = createSlice({
   name: 'favorite',
@@ -91,6 +107,19 @@ const favoriteSlice = createSlice({
       (state, { payload: favorites }) => {
         state.inProgress = false
         state.items = favorites
+      }
+    )
+    builder.addCase(removeFavoriteItem.pending, (state) => {
+      state.inProgress = true
+    })
+    builder.addCase(
+      removeFavoriteItem.fulfilled,
+      (state, { payload: favorite }) => {
+        state.inProgress = false
+        if (!favorite) {
+          return
+        }
+        state.items = favorite
       }
     )
   },

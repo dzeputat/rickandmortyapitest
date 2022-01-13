@@ -1,0 +1,62 @@
+.user {
+    display: grid;
+    grid-template-columns: 0.3fr 0.7fr;
+}
+
+.user__img {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    max-height: 200px;
+    min-width: 100px;
+}
+
+.user__img img {
+    border-radius: 50%;
+    max-height: 100%;
+}
+
+.user__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.user__text h3 {
+    font-size: 14px;
+    font-family: 'Raleway';
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn.login {
+    height: 100%;
+    flex-direction: column;
+}
+
+.btn ion-button {
+    width: 86%;
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    font-family: 'PT Sans Narrow';
+    font-size: 40px;
+    font-weight: 700;
+    color: antiquewhite;
+}

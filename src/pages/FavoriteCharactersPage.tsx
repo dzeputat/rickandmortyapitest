@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import CharactersPageComponent from '../components/CharactersPageComponent'
-import { addToFavorite, selectFavoriteItems } from '../store/favorite'
+import { removeFavoriteItem, selectFavoriteItems } from '../store/favorite'
 import { Characters } from '../utils/query'
 
 import './FavoriteCharactersPage.css'
@@ -30,10 +30,10 @@ const FavoriteCharactersPage: React.FC = () => {
     }
     setFavoriteList(favorites)
   }, [favoriteStore])
-  console.log(favoriteList)
+
   const onDislikeClick = (e: any, item: Characters) => {
     e.stopPropagation()
-    dispatch(addToFavorite({ item: item, favorite: false }))
+    dispatch(removeFavoriteItem(item.id))
   }
   const onCharacterClick = (id: number) => {
     history.push(`/home/characters/${id}`)

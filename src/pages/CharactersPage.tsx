@@ -26,14 +26,11 @@ const CharactersPage: React.FC = () => {
   const [disableInfiniteScroll, setDisableInfiniteScroll] =
     useState<boolean>(false)
   const [page, setPage] = useState<number | undefined>()
-  const { data, loading, error, fetchMore } = useQuery<GetCharacters>(
-    GET_CHARACTERS,
-    {
-      variables: {
-        page: 1,
-      },
-    }
-  )
+  const { data, error, fetchMore } = useQuery<GetCharacters>(GET_CHARACTERS, {
+    variables: {
+      page: 1,
+    },
+  })
   const [characters, setCharacters] = useState<Characters[] | undefined>()
   useEffect(() => {
     setCharacters(data?.characters.results)
@@ -46,7 +43,6 @@ const CharactersPage: React.FC = () => {
     if (page === data?.characters.info.pages || !page) {
       return
     }
-    console.log(page)
 
     fetchMore({
       variables: {
@@ -89,6 +85,7 @@ const CharactersPage: React.FC = () => {
         console.log(err)
       })
   }
+
   return (
     <IonPage>
       <IonHeader>
@@ -106,7 +103,8 @@ const CharactersPage: React.FC = () => {
         >
           <IonRefresherContent></IonRefresherContent>
         </IonRefresher>
-        {characters ? (
+        {error && <div className="spinner">{error.message}</div>}
+        {characters && !error ? (
           <>
             <IonList>
               {characters.map((character) => (
