@@ -8,6 +8,7 @@ import {
   IonList,
   IonPage,
   IonSpinner,
+  IonText,
   IonTitle,
   IonToolbar,
 } from '@ionic/react'
@@ -22,10 +23,17 @@ const AllCharactersComponent: React.FC<{
   onCharacterClick: (id: number) => void
 }> = ({ character, onCharacterClick }) => {
   return (
-    <div onClick={onCharacterClick.bind(null, character.id)} className="item">
-      <h2>{character.name}</h2>
-      <h3>{character.status}</h3>
-    </div>
+    <IonItem>
+      <IonLabel onClick={onCharacterClick.bind(null, character.id)}>
+        <IonText color="primary">
+          <h3>{character.name}</h3>
+        </IonText>
+
+        <IonText color="secondary">
+          <p>{character.status}</p>
+        </IonText>
+      </IonLabel>
+    </IonItem>
   )
 }
 const AllCharactersPage: React.FC = () => {
@@ -86,19 +94,21 @@ const AllCharactersPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Characters</IonTitle>
+          <IonTitle>List</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         {error && <div className="spinner">{error.message}</div>}
         {characters ? (
           <>
-            <IonInput
-              className="input-search"
-              placeholder="Search"
-              value={text}
-              onIonChange={(e) => onChangeHandler(e.detail.value!)}
-            ></IonInput>
+            <IonItem lines="none">
+              <IonInput
+                className="input-search"
+                placeholder="Search"
+                value={text}
+                onIonChange={(e) => onChangeHandler(e.detail.value!)}
+              ></IonInput>
+            </IonItem>
             {suggestion &&
               suggestion.map((character) => (
                 <IonItem
