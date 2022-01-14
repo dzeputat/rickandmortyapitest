@@ -1,0 +1,7 @@
+.input-search {
+    border: 1px solid var(--ion-color-primary);
+}
+
+.input-search ion-input {}
+
+.item-search {}

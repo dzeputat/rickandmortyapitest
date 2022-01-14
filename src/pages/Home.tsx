@@ -6,7 +6,12 @@ import {
   IonTabButton,
   IonTabs,
 } from '@ionic/react'
-import { heartOutline, homeOutline, personOutline } from 'ionicons/icons'
+import {
+  heartOutline,
+  homeOutline,
+  homeSharp,
+  personOutline,
+} from 'ionicons/icons'
 import { Route } from 'react-router'
 
 import CharacterDetailPage from './CharacterDetailPage'
@@ -17,10 +22,17 @@ import UserPage from './UserPage'
 import EpisodesPage from './EpisodesPage'
 import FavoriteCharactersPage from './FavoriteCharactersPage'
 
+import AllCharactersPage from './AllCharacters'
+
 const Home: React.FC = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
+        <Route
+          exact
+          path="/home/:tab(allCharacters)"
+          component={AllCharactersPage}
+        />
         <Route exact path="/home/:tab(characters)" component={CharactersPage} />
         <Route
           exact
@@ -41,6 +53,10 @@ const Home: React.FC = () => {
         />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
+        <IonTabButton tab="allCharacters" href="/home/allCharacters">
+          <IonIcon icon={homeSharp} />
+          <IonLabel>All</IonLabel>
+        </IonTabButton>
         <IonTabButton tab="characters" href="/home/characters">
           <IonIcon icon={homeOutline} />
           <IonLabel>Home</IonLabel>

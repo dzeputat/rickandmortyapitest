@@ -17,6 +17,39 @@ export interface Characters {
   species: string
   image: string
 }
+export interface GetAllCharacters {
+  characters: {
+    info: {
+      count: number
+      pages: number
+      next: number
+      prev: number
+    }
+    results: AllCharacters[]
+  }
+}
+export interface AllCharacters {
+  id: number
+  name: string
+  status: string
+}
+export const GET_ALL = gql`
+  query getCharacters($page: Int) {
+    characters(page: $page) {
+      info {
+        count
+        pages
+        next
+        prev
+      }
+      results {
+        id
+        name
+        status
+      }
+    }
+  }
+`
 export const GET_CHARACTERS = gql`
   query getCharacters($page: Int) {
     characters(page: $page) {
