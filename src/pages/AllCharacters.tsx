@@ -7,25 +7,27 @@ import {
   IonLabel,
   IonList,
   IonPage,
-  IonSearchbar,
   IonSpinner,
   IonTitle,
   IonToolbar,
 } from '@ionic/react'
-import { search } from 'ionicons/icons'
+
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
-import CharactersPageComponent from '../components/CharactersPageComponent'
-import {
-  AllCharacters,
-  Characters,
-  GetAllCharacters,
-  GetCharacters,
-  GET_ALL,
-  GET_CHARACTERS,
-} from '../utils/query'
-import './AllCharacters.css'
 
+import { AllCharacters, GetAllCharacters, GET_ALL } from '../utils/query'
+import './AllCharacters.css'
+const AllCharactersComponent: React.FC<{
+  character: AllCharacters
+  onCharacterClick: (id: number) => void
+}> = ({ character, onCharacterClick }) => {
+  return (
+    <div onClick={onCharacterClick.bind(null, character.id)} className="item">
+      <h2>{character.name}</h2>
+      <h3>{character.status}</h3>
+    </div>
+  )
+}
 const AllCharactersPage: React.FC = () => {
   const [characters, setCharacters] = useState<AllCharacters[]>()
   const [suggestion, setSuggestion] = useState<AllCharacters[]>([])
@@ -37,7 +39,7 @@ const AllCharactersPage: React.FC = () => {
       page: 1,
     },
   })
-  const [searchText, setSearchText] = useState('')
+
   useEffect(() => {
     const length = data?.characters.info.pages
     if (!length) {
@@ -54,6 +56,7 @@ const AllCharactersPage: React.FC = () => {
           array.push(...data.characters.results)
         })
         .then(() => {
+          if (characters?.length === 826) return
           setCharacters(characters ? [...characters, ...array] : [...array])
         })
 
@@ -63,7 +66,6 @@ const AllCharactersPage: React.FC = () => {
     }
   }, [data])
 
-  console.log(characters?.length)
   const onChangeHandler = (text: any) => {
     let matches: AllCharacters[] = []
     if (!characters) return
@@ -73,7 +75,7 @@ const AllCharactersPage: React.FC = () => {
         return char.name.match(regex)
       })
     }
-    console.log(matches)
+
     setSuggestion(matches)
     setText(text)
   }
@@ -101,33 +103,28 @@ const AllCharactersPage: React.FC = () => {
               suggestion.map((character) => (
                 <IonItem
                   className="item-search"
+                  key={character.id}
                   onClick={onCharacterClick.bind(null, character.id)}
                 >
-                  <IonLabel key={character.id}>{character.name}</IonLabel>
+                  <IonLabel>{character.name}</IonLabel>
                 </IonItem>
               ))}
 
             <IonList>
               {text
                 ? suggestion.map((character) => (
-                    <div
-                      onClick={onCharacterClick.bind(null, character.id)}
-                      className="list-item__info"
+                    <AllCharactersComponent
                       key={character.id}
-                    >
-                      <h2>{character.name}</h2>
-                      <h2>{character.status}</h2>
-                    </div>
+                      character={character}
+                      onCharacterClick={onCharacterClick}
+                    />
                   ))
                 : characters.map((character) => (
-                    <div
-                      onClick={onCharacterClick.bind(null, character.id)}
-                      className="list-item__info"
+                    <AllCharactersComponent
                       key={character.id}
-                    >
-                      <h2>{character.name}</h2>
-                      <h2>{character.status}</h2>
-                    </div>
+                      character={character}
+                      onCharacterClick={onCharacterClick}
+                    />
                   ))}
             </IonList>
           </>
