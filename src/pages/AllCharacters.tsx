@@ -111,7 +111,7 @@ const AllCharactersPage: React.FC = () => {
               ))}
 
             <IonList>
-              {text
+              {text.length > 0
                 ? suggestion.map((character) => (
                     <AllCharactersComponent
                       key={character.id}
