@@ -1,6 +1,0 @@
-{
-	"appId": "com.rickandmortyapi.test",
-	"appName": "myApp",
-	"webDir": "build",
-	"bundledWebRuntime": false
-}

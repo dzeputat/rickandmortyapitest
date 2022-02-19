@@ -21,6 +21,7 @@ npm install
 **Run**
 
 ```shell
+<<<<<<< Updated upstream
    ionic cap sync
 ```
 
@@ -29,3 +30,11 @@ npm install
 ```
 
 ## Tested on the IOS simulator IPhone 11 IOS 15.2 and IPhone SE IOS 15.1
+=======
+   ionic cap add ios
+   ionic cap sync
+   ionic cap open ios
+```
+
+if you have a problem, please check (https://ionicframework.com/docs/developing/ios)
+>>>>>>> Stashed changes
