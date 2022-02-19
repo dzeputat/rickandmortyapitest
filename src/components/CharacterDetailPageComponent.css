@@ -1,0 +1,47 @@
+.character {}
+
+.character__img {}
+
+.character__img img {
+    width: 100%;
+}
+
+.character__content {
+    padding: 20px;
+}
+
+.character__btns {
+    display: flex;
+    justify-content: space-around;
+}
+
+.character__content-text {
+    font-family: 'Raleway';
+    display: flex;
+    align-items: center;
+}
+
+.character__content-text h3 {
+    margin-left: 10px;
+    font-family: 'Creepster';
+}
+
+.character__episode {
+    display: -webkit-box;
+    overflow: scroll;
+}
+
+.character__episode-item {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Raleway';
+}
+
+ion-title {
+    font-family: 'Raleway';
+}
+
+.character__btns-favorite ion-icon {}

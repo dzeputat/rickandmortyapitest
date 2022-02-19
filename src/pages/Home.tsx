@@ -22,7 +22,7 @@ import UserPage from './UserPage'
 import EpisodesPage from './EpisodesPage'
 import FavoriteCharactersPage from './FavoriteCharactersPage'
 
-import AllCharactersPage from './AllCharacters'
+import CharactersListPage from './CharactersListPage'
 
 const Home: React.FC = () => {
   return (
@@ -30,8 +30,8 @@ const Home: React.FC = () => {
       <IonRouterOutlet>
         <Route
           exact
-          path="/home/:tab(allCharacters)"
-          component={AllCharactersPage}
+          path="/home/:tab(characters-list)"
+          component={CharactersListPage}
         />
         <Route exact path="/home/:tab(characters)" component={CharactersPage} />
         <Route
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
         />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="allCharacters" href="/home/allCharacters">
+        <IonTabButton tab="characters-list" href="/home/characters-list">
           <IonIcon icon={homeSharp} />
           <IonLabel>All</IonLabel>
         </IonTabButton>

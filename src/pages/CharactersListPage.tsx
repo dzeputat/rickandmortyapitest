@@ -8,35 +8,18 @@ import {
   IonList,
   IonPage,
   IonSpinner,
-  IonText,
   IonTitle,
   IonToolbar,
 } from '@ionic/react'
 
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
+import CharactersListComponent from '../components/CharactersListComponent'
 
 import { AllCharacters, GetAllCharacters, GET_ALL } from '../utils/query'
-import './AllCharacters.css'
-const AllCharactersComponent: React.FC<{
-  character: AllCharacters
-  onCharacterClick: (id: number) => void
-}> = ({ character, onCharacterClick }) => {
-  return (
-    <IonItem>
-      <IonLabel onClick={onCharacterClick.bind(null, character.id)}>
-        <IonText color="primary">
-          <h3>{character.name}</h3>
-        </IonText>
+import './CharactersListPage.css'
 
-        <IonText color="secondary">
-          <p>{character.status}</p>
-        </IonText>
-      </IonLabel>
-    </IonItem>
-  )
-}
-const AllCharactersPage: React.FC = () => {
+const CharactersListPage: React.FC = () => {
   const [characters, setCharacters] = useState<AllCharacters[]>()
   const [suggestion, setSuggestion] = useState<AllCharacters[]>([])
   const [text, setText] = useState('')
@@ -53,7 +36,7 @@ const AllCharactersPage: React.FC = () => {
     if (!length) {
       return
     }
-    const array: AllCharacters[] = []
+    const updateCharacters: AllCharacters[] = []
     for (let i = 1; i <= length; i++) {
       fetchMore({
         variables: {
@@ -61,11 +44,15 @@ const AllCharactersPage: React.FC = () => {
         },
       })
         .then(({ data }) => {
-          array.push(...data.characters.results)
+          updateCharacters.push(...data.characters.results)
         })
         .then(() => {
           if (characters?.length === 826) return
-          setCharacters(characters ? [...characters, ...array] : [...array])
+          setCharacters(
+            characters
+              ? [...characters, ...updateCharacters]
+              : [...updateCharacters]
+          )
         })
 
         .catch((err) => {
@@ -83,7 +70,6 @@ const AllCharactersPage: React.FC = () => {
         return char.name.match(regex)
       })
     }
-
     setSuggestion(matches)
     setText(text)
   }
@@ -99,7 +85,7 @@ const AllCharactersPage: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         {error && <div className="spinner">{error.message}</div>}
-        {characters ? (
+        {characters && characters.length >= 800 ? (
           <>
             <IonItem lines="none">
               <IonInput
@@ -119,18 +105,17 @@ const AllCharactersPage: React.FC = () => {
                   <IonLabel>{character.name}</IonLabel>
                 </IonItem>
               ))}
-
             <IonList>
               {text.length > 0
                 ? suggestion.map((character) => (
-                    <AllCharactersComponent
+                    <CharactersListComponent
                       key={character.id}
                       character={character}
                       onCharacterClick={onCharacterClick}
                     />
                   ))
                 : characters.map((character) => (
-                    <AllCharactersComponent
+                    <CharactersListComponent
                       key={character.id}
                       character={character}
                       onCharacterClick={onCharacterClick}
@@ -148,4 +133,4 @@ const AllCharactersPage: React.FC = () => {
   )
 }
 
-export default AllCharactersPage
+export default CharactersListPage
