@@ -6,7 +6,6 @@
 ![characters](https://user-images.githubusercontent.com/61458587/154835031-c24975ca-f6ad-4919-98be-5f92d7f159af.png)
 ![detail](https://user-images.githubusercontent.com/61458587/154835108-f17cb2b7-a514-4bfd-998c-394831e21924.png)
 ![login](https://user-images.githubusercontent.com/61458587/154835093-fa71bac7-5670-4187-83b0-d6b9a9033401.png)
-309-be52-4f7f-a4b7-61654fc5f493.png)
 
 ## Quick start
 
