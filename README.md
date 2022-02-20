@@ -2,6 +2,8 @@
 
 # This application use Rick and Morty API to render characters
 
+![list image]('/assets/list.png')
+
 ## Quick start
 
 Make sure you have nodejs installed. (https://nodejs.org/)
