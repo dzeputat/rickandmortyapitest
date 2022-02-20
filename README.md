@@ -2,7 +2,7 @@
 
 # This application use Rick and Morty API to render characters
 
-![list image]('/assets/list.png')
+![list image]('/assets/icon/icon.png')
 
 ## Quick start
 
