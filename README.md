@@ -18,7 +18,7 @@ Make sure you have nodejs installed. (https://nodejs.org/)
 ```
 
 ```shell
-  ionic serve
+  npm start
 ```
 
 ## NOTE Login with facebook working only with IOS version
