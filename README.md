@@ -27,10 +27,10 @@ Make sure you have nodejs installed. (https://nodejs.org/)
 
 **Run**
 
-```shell
+<!-- ```shell
    ionic cap add ios
    ionic cap sync
    ionic cap open ios
-```
+``` -->
 
 if you have a problem, please check (https://ionicframework.com/docs/developing/ios)
